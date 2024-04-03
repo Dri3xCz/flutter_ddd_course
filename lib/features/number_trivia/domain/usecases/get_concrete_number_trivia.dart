@@ -5,23 +5,23 @@ import 'package:clean_flutter_tdd_ddd/features/number_trivia/domain/repositories
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-class GetConcreteNumberTrivia extends UseCase<NumberTrivia, Params> {
+class GetConcreteNumberTrivia implements UseCase<NumberTrivia, GetConcreteNumberTriviaParams> {
   final NumberTriviaRepository repository;
 
-  GetConcreteNumberTrivia(this.repository);
+  const GetConcreteNumberTrivia(this.repository);
 
   @override
-  Future<Either<Failure, NumberTrivia>> call(Params params) async {
+  Future<Either<Failure, NumberTrivia>> call(GetConcreteNumberTriviaParams params) async {
     return repository.getConcreteNumberTrivia(
       params.number,
     );
   }
 }
 
-final class Params extends Equatable {
+final class GetConcreteNumberTriviaParams extends Equatable {
   final int number;
 
-  const Params(this.number);
+  const GetConcreteNumberTriviaParams({required this.number});
 
   @override
   List<Object?> get props => [number];

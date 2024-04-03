@@ -33,7 +33,7 @@ void main() {
         .thenAnswer((_) async => expectedResult);
 
       // act
-      final result = await usecase(Params(tNumber));
+      final result = await usecase(GetConcreteNumberTriviaParams(number: tNumber));
 
       //assert 
       expect(result, expectedResult);
