@@ -14,7 +14,7 @@ import "package:http/http.dart" as http;
 
 final getIt = GetIt.instance;
 
-Future<void> setup() async {
+void setup() {
   // features: Number Trivia
   // Bloc
   getIt.registerFactory(() => NumberTriviaBloc(
@@ -41,8 +41,8 @@ Future<void> setup() async {
     () => NumberTriviaRemoteDataSourceImpl(client: getIt()),
   );
 
-  getIt.registerLazySingleton<NumberTriviaLocalDataSource>(
-    () => NumberTriviaLocalDataSourceImpl(sharedPreferences: getIt()),
+  getIt.registerSingletonAsync<NumberTriviaLocalDataSource>(
+    () async => NumberTriviaLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance())
   );
 
   //! Core
@@ -51,8 +51,6 @@ Future<void> setup() async {
   getIt.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(getIt()));
 
   //! External
-  final sharedPreferences = await SharedPreferences.getInstance();
-  getIt.registerLazySingleton(() => sharedPreferences);
   getIt.registerLazySingleton(() => http.Client());
   getIt.registerLazySingleton(() => InternetConnectionChecker()); 
 }

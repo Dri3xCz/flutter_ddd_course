@@ -19,9 +19,9 @@ const String INVALID_INPUT_FAILURE_MESSAGE =
 class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   final GetConcreteNumberTrivia getConcreteNumberTrivia;
   final GetRandomNumberTrivia getRandomNumberTrivia;
-  final InputConverter inputConverter;
+  final InputConverter inputConverter; 
 
-  _handleUsecase(
+  Future<void> _handleUsecase(
     Emitter emit, Future<Either<Failure, NumberTrivia>> useCase
   ) async {
     emit(Loading());
@@ -38,6 +38,17 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     );
   }
 
+  Future<void> _handleConcrete(Emitter emit, String numberString) async {
+    final inputEither = inputConverter.stringToUnsignedInteger(numberString);
+      
+    await inputEither.fold(
+      (failure) async => emit(Error(message: INVALID_INPUT_FAILURE_MESSAGE)),
+      (integer) async {
+        await _handleUsecase(emit, getConcreteNumberTrivia(GetConcreteNumberTriviaParams(number: integer))); 
+      }
+    );
+  }
+
   final initialState = Empty();
 
   NumberTriviaBloc({
@@ -45,19 +56,12 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     required this.getRandomNumberTrivia,
     required this.inputConverter,
   }) : super(Empty()) {
-    on<GetTriviaForConcreteNumber>((event, emit) {
-      final inputEither = inputConverter.stringToUnsignedInteger(event.numberString);
-
-      inputEither.fold(
-        (failure) => emit(Error(message: INVALID_INPUT_FAILURE_MESSAGE)),
-        (integer) async {
-          _handleUsecase(emit, getConcreteNumberTrivia(GetConcreteNumberTriviaParams(number: integer))); 
-        }
-      );
+    on<GetTriviaForConcreteNumber>((event, emit) async {
+      await _handleConcrete(emit, event.numberString);
     });
 
     on<GetTriviaForRandomNumber>((event, emit) async {
-      _handleUsecase(emit, getRandomNumberTrivia(NoParams()));  
+      await _handleUsecase(emit, getRandomNumberTrivia(NoParams()));  
     }); 
   }
 }
