@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:clean_flutter_tdd_ddd/core/error/failures.dart';
 import 'package:clean_flutter_tdd_ddd/core/usecases/usecase.dart';
@@ -19,34 +21,43 @@ const String INVALID_INPUT_FAILURE_MESSAGE =
 class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   final GetConcreteNumberTrivia getConcreteNumberTrivia;
   final GetRandomNumberTrivia getRandomNumberTrivia;
-  final InputConverter inputConverter; 
+  final InputConverter inputConverter;
 
   Future<void> _handleUsecase(
-    Emitter emit, Future<Either<Failure, NumberTrivia>> useCase
-  ) async {
+      Emitter emit, Future<Either<Failure, NumberTrivia>> useCase) async {
     emit(Loading());
     final failureOrTrivia = await useCase;
-    
-    failureOrTrivia.fold(
+
+    final NumberTriviaState result = failureOrTrivia.fold(
       (failure) {
         final message = failure is ServerFailure
-          ? SERVER_FAILURE_MESSAGE
-          : CACHE_FAILURE_MESSAGE; 
-        emit(Error(message: message));
+            ? SERVER_FAILURE_MESSAGE
+            : CACHE_FAILURE_MESSAGE;
+
+        return Error(message: message);
       },
-      (numberTrivia) => emit(Loaded(numberTrivia: numberTrivia))
+      (numberTrivia) => Loaded(numberTrivia: numberTrivia),
     );
+
+    emit.call(result);
   }
 
-  Future<void> _handleConcrete(Emitter emit, String numberString) async {
+  FutureOr<void> _handleConcrete(Emitter emit, String numberString) async {
     final inputEither = inputConverter.stringToUnsignedInteger(numberString);
-      
-    await inputEither.fold(
-      (failure) async => emit(Error(message: INVALID_INPUT_FAILURE_MESSAGE)),
-      (integer) async {
-        await _handleUsecase(emit, getConcreteNumberTrivia(GetConcreteNumberTriviaParams(number: integer))); 
-      }
+
+    final FutureOr<void> result = inputEither.fold(
+      (failure) => emit.call(Error(message: INVALID_INPUT_FAILURE_MESSAGE)),
+      (integer) => _handleUsecase(
+        emit,
+        getConcreteNumberTrivia(
+          GetConcreteNumberTriviaParams(
+            number: integer,
+          ),
+        ),
+      ),
     );
+
+    return result;
   }
 
   final initialState = Empty();
@@ -61,7 +72,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     });
 
     on<GetTriviaForRandomNumber>((event, emit) async {
-      await _handleUsecase(emit, getRandomNumberTrivia(NoParams()));  
-    }); 
+      await _handleUsecase(emit, getRandomNumberTrivia(NoParams()));
+    });
   }
 }

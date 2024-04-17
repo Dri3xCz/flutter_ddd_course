@@ -2,8 +2,8 @@ import 'package:clean_flutter_tdd_ddd/features/number_trivia/presentation/pages/
 import 'package:flutter/material.dart';
 import 'injection_container.dart' as di;
 
-void main() {
-  di.setup();
+void main() async {
+  await di.setup();
   runApp(const MyApp());
 }
 

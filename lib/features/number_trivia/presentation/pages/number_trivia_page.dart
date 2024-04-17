@@ -9,15 +9,10 @@ class NumberTriviaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Number Trivia'),
-      ),
-      body: FutureBuilder(future: getIt.allReady(), builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return buildBody(context);
-        } else return CircularProgressIndicator();
-      },),
-    );
+        appBar: AppBar(
+          title: Text('Number Trivia'),
+        ),
+        body: buildBody(context));
   }
 }
 
@@ -33,26 +28,21 @@ BlocProvider<NumberTriviaBloc> buildBody(BuildContext context) {
             // Top half
             BlocBuilder<NumberTriviaBloc, NumberTriviaState>(
               builder: (context, state) {
-                if (state is Empty) {
-                  return MessageDisplay(message: 'Start searching!');
-                } else if (state is Error) {
-                  return MessageDisplay(message: state.message);
-                } else if (state is Loading) {
-                  return LoadingWidget();
-                } else if (state is Loaded) {
-                  return TriviaDisplay(numberTrivia: state.numberTrivia);
-                } else {
-                  return MessageDisplay(message: "Something went wrong");
-                }
+                return switch (state) {
+                  Empty() => const MessageDisplay(message: 'Start searching!'),
+                  Error(:final message) => MessageDisplay(message: message),
+                  Loading() => const LoadingWidget(),
+                  Loaded(:final numberTrivia) => TriviaDisplay(
+                      numberTrivia: numberTrivia,
+                    ),
+                };
               },
             ),
             // Bottom half
-           TriviaControls(), 
+            TriviaControls(),
           ],
         ),
       ),
     ),
   );
 }
-
-

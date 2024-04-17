@@ -8,10 +8,10 @@ sealed class NumberTriviaEvent extends Equatable {
 }
 
 
-class GetTriviaForConcreteNumber extends NumberTriviaEvent {
+final class GetTriviaForConcreteNumber extends NumberTriviaEvent {
   final String numberString;
 
   GetTriviaForConcreteNumber(this.numberString);
 }
 
-class GetTriviaForRandomNumber extends NumberTriviaEvent {}
+final class GetTriviaForRandomNumber extends NumberTriviaEvent {}
