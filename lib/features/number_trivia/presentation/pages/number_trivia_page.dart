@@ -1,18 +1,21 @@
+import 'package:clean_flutter_tdd_ddd/core/components/DrawerWithLocalization.dart';
 import 'package:clean_flutter_tdd_ddd/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
 import 'package:clean_flutter_tdd_ddd/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../widgets/widgets.dart';
 
 class NumberTriviaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Number Trivia'),
-        ),
-        body: buildBody(context));
+      appBar: AppBar(
+        title: Text('Number Trivia'),
+        
+      ),
+      body: buildBody(context),
+      drawer: DrawerWithLocalization(), 
+    );
   }
 }
 
