@@ -15,7 +15,7 @@ class DrawerWithLocalization extends StatelessWidget {
         children: [
           Expanded(child: Placeholder()),
           Container(
-            height: MediaQuery.of(context).size.height / 6,
+            height: 60,
             child: LocalizationWidget(),
           ),
         ],

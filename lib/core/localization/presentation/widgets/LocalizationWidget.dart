@@ -31,25 +31,24 @@ class _LocalizationWidgetState extends State<LocalizationWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       child: Padding(
         padding: EdgeInsets.all(10),
-        child: ElevatedButton(
+        child: ElevatedButton.icon(
           onPressed: _onPressed,
-          child: Row(
-            children: [
-              Icon(
-                Icons.language,
-                size: 48,
+          icon: Icon(Icons.language),
+          label: Container(
+            width: double.infinity,
+            child: Text(
+              currentLanguage.languageCode.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
               ),
-              SizedBox(width: 12,),
-              Text(
-                currentLanguage.languageCode,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 26
-                ),
-              )
-            ],
+            ),
+          ),
+          style: ButtonStyle(
+            side: MaterialStateProperty.all(BorderSide(width: 1))
           ),
         ),
       ),
