@@ -18,10 +18,16 @@ extension Rotate<T> on ListQueue<T> {
 class LocalizationWidget extends HookWidget {
 
   final ListQueue<LocalizationLanguage> languageQueue = ListQueue.from(LocalizationLanguage.values);
-  late LocalizationLanguage initialState;
+  final LocalizationLanguage initialState = LocalizationLanguage.English;
 
   LocalizationWidget() {
-    initialState = languageQueue.rotateLeft();
+    syncLanguageQueue();
+  }
+
+  void syncLanguageQueue() {
+    while (initialState != languageQueue.last) {
+        languageQueue.rotateLeft();
+    }
   }
 
   @override
