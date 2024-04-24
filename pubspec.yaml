@@ -23,6 +23,8 @@ dependencies:
   http: ^1.2.1
   # Local cache
   shared_preferences: ^2.2.2
+  # Hooks
+  flutter_hooks: ^0.20.5
 
 dev_dependencies:
   flutter_test:
