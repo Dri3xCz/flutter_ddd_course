@@ -5,8 +5,8 @@ import 'package:clean_flutter_tdd_ddd/core/localization/domain/entities/localiza
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-extension Rotate on ListQueue {
-  dynamic rotateLeft() {
+extension Rotate<T> on ListQueue<T> {
+  T rotateLeft() {
     final value = this.removeFirst();
  
     this.addLast(value);
