@@ -13,6 +13,12 @@ extension Rotate<T> on ListQueue<T> {
  
     return value;
   }
+
+  void rotateLeftTill(bool Function(ListQueue<T>) condition) {
+    while (condition(this)) {
+      this.rotateLeft();
+    }
+  }
 }
 
 class LocalizationWidget extends HookWidget {
@@ -21,13 +27,7 @@ class LocalizationWidget extends HookWidget {
   final LocalizationLanguage initialState = LocalizationLanguage.English;
 
   LocalizationWidget() {
-    syncLanguageQueue();
-  }
-
-  void syncLanguageQueue() {
-    while (initialState != languageQueue.last) {
-        languageQueue.rotateLeft();
-    }
+    languageQueue.rotateLeftTill((q) => q.last != initialState);
   }
 
   @override
