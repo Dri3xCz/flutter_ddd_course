@@ -1,4 +1,4 @@
-import 'package:clean_flutter_tdd_ddd/core/components/DrawerWithBottomControl.dart';
+import 'package:clean_flutter_tdd_ddd/core/components/SettingsDrawer.dart';
 import 'package:clean_flutter_tdd_ddd/core/localization/presentation/widgets/LocalizationWidget.dart';
 import 'package:clean_flutter_tdd_ddd/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
 import 'package:clean_flutter_tdd_ddd/injection_container.dart';
@@ -15,7 +15,7 @@ class NumberTriviaPage extends StatelessWidget {
         
       ),
       body: buildBody(context),
-      drawer: DrawerWithBottomControl(
+      drawer: SettingsDrawer(
         mainWidgets: [],
         bottomWidget: LocalizationWidget(),
       ), 
