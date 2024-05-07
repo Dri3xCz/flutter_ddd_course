@@ -23,6 +23,9 @@ dependencies:
   http: ^1.2.1
   # Local cache
   shared_preferences: ^2.2.2
+  flutter_redux: ^0.10.0
+  redux_epics: ^0.15.1
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:
