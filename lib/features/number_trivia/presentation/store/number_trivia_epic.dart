@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/transformers.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../../../core/store/app_state.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/input_converter.dart';
 import '../../domain/entities/number_trivia.dart';
@@ -15,6 +17,9 @@ const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
 const String INVALID_INPUT_FAILURE_MESSAGE =
     'Invalid Input - The number must be a positive integer or zero.';
 
+@LazySingleton(
+  as: NumberTriviaEpic<AppState>,
+)
 class NumberTriviaEpic<T> implements EpicClass<T> {
   final GetConcreteNumberTrivia getConcreteNumberTrivia;
   final GetRandomNumberTrivia getRandomNumberTrivia;

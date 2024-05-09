@@ -1,9 +1,11 @@
+import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 abstract interface class NetworkInfo {
   Future<bool> get isConnected;
 }
 
+@lazySingleton
 class NetworkInfoImpl implements NetworkInfo {
   final InternetConnectionChecker connectionChecker;
 
