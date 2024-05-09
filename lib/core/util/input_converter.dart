@@ -1,11 +1,12 @@
-import 'package:clean_flutter_tdd_ddd/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
+
+import '../error/failures.dart';
 
 class InputConverter {
   Either<Failure, int> stringToUnsignedInteger(String str) {
     try {
       final convertedNumber = int.parse(str);
-      if (convertedNumber < 0) throw FormatException();
+      if (convertedNumber < 0) throw const FormatException();
       return Right(convertedNumber);
     } on FormatException {
       return Left(InvalidInputFailure());

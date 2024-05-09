@@ -1,11 +1,13 @@
 import 'dart:convert';
+
 import 'package:clean_flutter_tdd_ddd/core/error/exception.dart';
 import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/datasources/number_trivia_remote_data_source.dart';
 import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/models/number_trivia_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+
 import '../../../../fixtures/fixture_reader.dart';
 import 'number_trivia_remote_data_source_test.mocks.dart';
 
@@ -43,24 +45,22 @@ void main() {
       ),
     ).thenAnswer(
       (_) async => http.Response(
-        "Something went wrong!", 
+        'Something went wrong!',
         404,
       ),
     );
   }
 
-
-
   group('getConcreteNumberTrivia', () {
-    final tNumber = 1;
+    const tNumber = 1;
     final tNumberTriviaModel =
-      NumberTriviaModel.fromJson(json.decode(fixture('trivia.json')));
+        NumberTriviaModel.fromJson(json.decode(fixture('trivia.json')) as Map<String, dynamic>);
 
     test(
       'should preform a GET request on a URL with number being the endpoint and with application/json header',
       () {
         // arrange
-        final expectedUri = Uri.http("numbersapi.com", "$tNumber");
+        final expectedUri = Uri.http('numbersapi.com', '$tNumber');
 
         // mock
         setUpMockHttpClientSuccess200();
@@ -72,7 +72,7 @@ void main() {
         verify(mockHttpClient.get(
           expectedUri,
           headers: {'Content-Type': 'application/json'},
-        ));
+        ),);
       },
     );
 
@@ -91,7 +91,7 @@ void main() {
     );
 
     test(
-      "should throw a ServerException when the response code is 404 or other",
+      'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
         // mock
@@ -100,7 +100,7 @@ void main() {
         // act
         final call = dataSource.getConcreteNumberTrivia;
 
-        // assert 
+        // assert
         expect(() => call(tNumber), throwsA(isA<ServerException>()));
       },
     );
@@ -108,13 +108,13 @@ void main() {
 
   group('getRandomNumberTrivia', () {
     final tNumberTriviaModel =
-      NumberTriviaModel.fromJson(json.decode(fixture('trivia.json')));
+        NumberTriviaModel.fromJson(json.decode(fixture('trivia.json')) as Map<String, dynamic>);
 
     test(
       'should preform a GET request on a URL with random number endpoint and with application/json header',
       () {
         // arrange
-        final expectedUri = Uri.http("numbersapi.com", "random");
+        final expectedUri = Uri.http('numbersapi.com', 'random');
 
         // mock
         setUpMockHttpClientSuccess200();
@@ -126,7 +126,7 @@ void main() {
         verify(mockHttpClient.get(
           expectedUri,
           headers: {'Content-Type': 'application/json'},
-        ));
+        ),);
       },
     );
 
@@ -145,7 +145,7 @@ void main() {
     );
 
     test(
-      "should throw a ServerException when the response code is 404 or other",
+      'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
         // mock
@@ -154,8 +154,8 @@ void main() {
         // act
         final call = dataSource.getRandomNumberTrivia;
 
-        // assert 
-        expect(() => call(), throwsA(isA<ServerException>()));
+        // assert
+        expect(call, throwsA(isA<ServerException>()));
       },
     );
   });

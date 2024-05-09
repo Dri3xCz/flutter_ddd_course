@@ -1,10 +1,8 @@
-import 'package:clean_flutter_tdd_ddd/core/store/app_state.dart';
-import 'package:clean_flutter_tdd_ddd/features/number_trivia/presentation/store/number_trivia_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
 
+import '../../../../core/store/app_state.dart';
+import '../store/number_trivia_state.dart';
 import '../widgets/widgets.dart';
 
 class NumberTriviaPage extends StatelessWidget {
@@ -12,7 +10,7 @@ class NumberTriviaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Number Trivia'),
+        title: const Text('Number Trivia'),
       ),
       body: buildBody(context),
     );
@@ -28,9 +26,9 @@ StoreConnector<AppState, NumberTriviaState> buildBody(BuildContext context) {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: <Widget>[
-              SizedBox(height: 10),
-              numberTriviaStateContainer(context, state) ,
-              TriviaControls(), 
+              const SizedBox(height: 10),
+              numberTriviaStateContainer(context, state),
+              TriviaControls(),
             ],
           ),
         ),
@@ -39,18 +37,14 @@ StoreConnector<AppState, NumberTriviaState> buildBody(BuildContext context) {
   );
 }
 
-Widget numberTriviaStateContainer(BuildContext context, NumberTriviaState state) {
-  if (state is Empty) {
-    return MessageDisplay(message: 'Start searching!');
-  } else if (state is Error) {
-    return MessageDisplay(message: state.message);
-  } else if (state is Loading) {
-    return LoadingWidget();
-  } else if (state is Loaded) {
-    return TriviaDisplay(numberTrivia: state.numberTrivia);
-  } else {
-    return MessageDisplay(message: "Something went wrong");
-  } 
+Widget numberTriviaStateContainer(
+    BuildContext context, NumberTriviaState state,) {
+  return switch (state) {
+    Empty() => const MessageDisplay(message: 'Start searching!'),
+    Loading() => LoadingWidget(),
+    Error() => MessageDisplay(message: state.message),
+    Loaded() => TriviaDisplay(
+        numberTrivia: state.numberTrivia,
+      ),
+  };
 }
-
-

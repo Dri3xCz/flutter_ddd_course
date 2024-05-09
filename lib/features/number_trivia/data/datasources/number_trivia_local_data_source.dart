@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:clean_flutter_tdd_ddd/core/error/exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../core/error/exception.dart';
 import '../models/number_trivia_model.dart';
 
 abstract interface class NumberTriviaLocalDataSource {
@@ -29,7 +29,7 @@ class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
     if (jsonString == null) {
       throw CacheException();
     }
-    return Future.value(NumberTriviaModel.fromJson(json.decode(jsonString)));
+    return Future.value(NumberTriviaModel.fromJson(json.decode(jsonString) as Map<String, dynamic>,),);
   }
 
   @override

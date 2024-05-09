@@ -5,23 +5,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 
 @GenerateNiceMocks([
-  MockSpec<InputConverter>(), 
+  MockSpec<InputConverter>(),
 ])
-
 void main() {
   late InputConverter inputConverter;
 
   setUp(() => {
-    inputConverter = InputConverter(),
-  });
+        inputConverter = InputConverter(),
+      },);
 
-  group("string to unsigned int", () {
+  group('string to unsigned int', () {
     test(
-      "should return integer when string represents an unsigned integer",
+      'should return integer when string represents an unsigned integer',
       () async {
         // arrange
-        final tStr = "123"; 
-        final expectedResult = Right<Failure, int>(123);
+        const tStr = '123';
+        const expectedResult = Right<Failure, int>(123);
 
         // act
         final result = inputConverter.stringToUnsignedInteger(tStr);
@@ -32,25 +31,24 @@ void main() {
     );
 
     test(
-      "should return [InvalidInputFailure] when string doesn't represent integer",
-      () async {
-        // arrange
-        final tStr = "abc"; 
-        final expectedResult = Left<Failure, int>(InvalidInputFailure());
+        "should return [InvalidInputFailure] when string doesn't represent integer",
+        () async {
+      // arrange
+      const tStr = 'abc';
+      final expectedResult = Left<Failure, int>(InvalidInputFailure());
 
-        // act 
-        final result = inputConverter.stringToUnsignedInteger(tStr);
+      // act
+      final result = inputConverter.stringToUnsignedInteger(tStr);
 
-        // assert
-        expect(result, expectedResult);
-      }
-    );
+      // assert
+      expect(result, expectedResult);
+    });
 
     test(
       'should return a failure when the string is a negative integer',
       () async {
         // arrange
-        final str = '-123';
+        const str = '-123';
         final expectedResult = Left<Failure, int>(InvalidInputFailure());
 
         // act

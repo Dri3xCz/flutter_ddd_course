@@ -1,5 +1,6 @@
-import 'package:clean_flutter_tdd_ddd/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:flutter/material.dart';
+
+import '../../domain/entities/number_trivia.dart';
 
 class TriviaDisplay extends StatelessWidget {
   final NumberTrivia numberTrivia;
@@ -10,14 +11,14 @@ class TriviaDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height / 3,
       child: Column(
         children: <Widget>[
           // Fixed size, doesn't scroll
           Text(
             numberTrivia.number.toString(),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 50,
               fontWeight: FontWeight.bold,
             ),
@@ -29,12 +30,12 @@ class TriviaDisplay extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Text(
                   numberTrivia.text,
-                  style: TextStyle(fontSize: 25),
+                  style: const TextStyle(fontSize: 25),
                   textAlign: TextAlign.center,
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

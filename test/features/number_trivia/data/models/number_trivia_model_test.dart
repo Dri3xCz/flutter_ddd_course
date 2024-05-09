@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
-  final tNumberTriviaModel = NumberTriviaModel(number: 1, text: "Test text");
+  const tNumberTriviaModel = NumberTriviaModel(number: 1, text: 'Test text');
 
   test(
     'should be a subclass of NumberTrivia',
@@ -17,27 +17,24 @@ void main() {
   );
 
   group('fromJson', () {
+    test('should return a valid model when the JSON number is an integer',
+        () async {
+      // arange
+      final Map<String, dynamic> jsonMap = json.decode(fixture('trivia.json')) as Map<String, dynamic>;
+
+      // act
+      final result = NumberTriviaModel.fromJson(jsonMap);
+
+      // assert
+      expect(result, tNumberTriviaModel);
+    });
+
     test(
-      'should return a valid model when the JSON number is an integer',
+      'should return a valid model when the JSON number is regarded as a double',
       () async {
-        // arange 
-        final Map<String, dynamic> jsonMap = 
-          json.decode(fixture('trivia.json'));
-
-        // act 
-        final result = NumberTriviaModel.fromJson(jsonMap);
-
-        // assert 
-        expect(result, tNumberTriviaModel);
-      }
-    );
-
-    test(
-    'should return a valid model when the JSON number is regarded as a double',
-    () async {
         // arrange
         final Map<String, dynamic> jsonMap =
-            json.decode(fixture('trivia_double.json'));
+            json.decode(fixture('trivia_double.json')) as Map<String, dynamic>;
         // act
         final result = NumberTriviaModel.fromJson(jsonMap);
         // assert
@@ -51,8 +48,8 @@ void main() {
       () async {
         // arrange
         final expectedJsonMap = {
-          "text": "Test text",
-          "number": 1,
+          'text': 'Test text',
+          'number': 1,
         };
         // act
         final result = tNumberTriviaModel.toJson();

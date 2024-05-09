@@ -27,7 +27,7 @@ void main() {
     'getLastNumberTrivia',
     () {
       final tNumberTriviaModel = NumberTriviaModel.fromJson(
-          json.decode(fixture('trivia_cached.json')));
+          json.decode(fixture('trivia_cached.json')) as Map<String, dynamic>,);
 
       test(
         'should return NumberTrivia from SharedPreferences when there is one in the cache',
@@ -56,7 +56,7 @@ void main() {
           // assert
           // Calling the method happens from a higher-order function passed.
           // This is needed to test if calling a method throws an exception.
-          expect(() => call(), throwsA(isA<CacheException>()));
+          expect(call, throwsA(isA<CacheException>()));
         },
       );
     },
@@ -65,7 +65,7 @@ void main() {
   group(
     'cacheNumberTrivia',
     () {
-      final tNumberTriviaModel = NumberTriviaModel(
+      const tNumberTriviaModel = NumberTriviaModel(
         number: 1,
         text: 'test trivia',
       );

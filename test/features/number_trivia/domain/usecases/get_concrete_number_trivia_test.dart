@@ -21,21 +21,22 @@ void main() {
     usecase = GetConcreteNumberTrivia(mockNumberTriviaRepository);
   });
 
-  final tNumber = 1;
-  final tNumberTrivia = NumberTrivia(number: tNumber, text: 'test');
+  const tNumber = 1;
+  const tNumberTrivia = NumberTrivia(number: tNumber, text: 'test');
 
   test(
     'should get trivia for the number from the repository',
     () async {
       // arrange
-      final expectedResult = Right<Failure, NumberTrivia>(tNumberTrivia);
+      const expectedResult = Right<Failure, NumberTrivia>(tNumberTrivia);
       when(mockNumberTriviaRepository.getConcreteNumberTrivia(any))
-        .thenAnswer((_) async => expectedResult);
+          .thenAnswer((_) async => expectedResult);
 
       // act
-      final result = await usecase(GetConcreteNumberTriviaParams(number: tNumber));
+      final result =
+          await usecase(const GetConcreteNumberTriviaParams(number: tNumber));
 
-      //assert 
+      //assert
       expect(result, expectedResult);
       verify(mockNumberTriviaRepository.getConcreteNumberTrivia(tNumber));
       verifyNoMoreInteractions(mockNumberTriviaRepository);

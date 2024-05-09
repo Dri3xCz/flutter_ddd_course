@@ -1,6 +1,6 @@
-
-import 'package:clean_flutter_tdd_ddd/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../domain/entities/number_trivia.dart';
 
 sealed class NumberTriviaAction extends Equatable {
   const NumberTriviaAction();
@@ -12,7 +12,7 @@ sealed class NumberTriviaAction extends Equatable {
 final class GetConcrete extends NumberTriviaAction {
   final String numberString;
 
-  GetConcrete(this.numberString);
+  const GetConcrete(this.numberString);
 }
 
 final class GetRandom extends NumberTriviaAction {}
@@ -20,11 +20,11 @@ final class GetRandom extends NumberTriviaAction {}
 final class FetchSuccess extends NumberTriviaAction {
   final NumberTrivia trivia;
 
-  FetchSuccess(this.trivia);
+  const FetchSuccess(this.trivia);
 }
 
 final class FetchFailed extends NumberTriviaAction {
   final String message;
 
-  FetchFailed(this.message);
+  const FetchFailed(this.message);
 }

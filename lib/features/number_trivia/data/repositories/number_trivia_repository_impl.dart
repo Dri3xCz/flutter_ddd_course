@@ -1,14 +1,15 @@
-import 'package:clean_flutter_tdd_ddd/core/error/exception.dart';
-import 'package:clean_flutter_tdd_ddd/core/error/failures.dart';
-import 'package:clean_flutter_tdd_ddd/core/network/network_info.dart';
-import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/datasources/number_trivia_local_data_source.dart';
-import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/datasources/number_trivia_remote_data_source.dart';
-import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/models/number_trivia_model.dart';
-import 'package:clean_flutter_tdd_ddd/features/number_trivia/domain/entities/number_trivia.dart';
-import 'package:clean_flutter_tdd_ddd/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:dartz/dartz.dart';
 
-typedef Future<NumberTriviaModel> _ConcreteOrRandomChooser();
+import '../../../../core/error/exception.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/network_info.dart';
+import '../../domain/entities/number_trivia.dart';
+import '../../domain/repositories/number_trivia_repository.dart';
+import '../datasources/number_trivia_local_data_source.dart';
+import '../datasources/number_trivia_remote_data_source.dart';
+import '../models/number_trivia_model.dart';
+
+typedef _ConcreteOrRandomChooser = Future<NumberTriviaModel> Function();
 
 class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   final NumberTriviaRemoteDataSource remoteDataSource;
@@ -25,16 +26,14 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(
     int number,
   ) async {
-    return await _getTrivia(() {
+    return _getTrivia(() {
       return remoteDataSource.getConcreteNumberTrivia(number);
     });
   }
 
   @override
   Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia() async {
-    return await _getTrivia(() {
-      return remoteDataSource.getRandomNumberTrivia();
-    });
+    return _getTrivia(remoteDataSource.getRandomNumberTrivia);
   }
 
   Future<Either<Failure, NumberTrivia>> _getTrivia(

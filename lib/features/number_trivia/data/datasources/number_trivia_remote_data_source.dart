@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:clean_flutter_tdd_ddd/core/error/exception.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../../core/error/exception.dart';
 import '../models/number_trivia_model.dart';
 
 abstract interface class NumberTriviaRemoteDataSource {
@@ -32,17 +33,17 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
     if (response.statusCode != 200) {
       throw ServerException();
     }
-    
-    return NumberTriviaModel.fromJson(json.decode(response.body));
+
+    return NumberTriviaModel.fromJson(json.decode(response.body) as Map<String, dynamic>);
   }
 
   @override
   Future<NumberTriviaModel> getConcreteNumberTrivia(int number) async {
-    return _getTriviaFromUri(Uri.http("numbersapi.com", "$number"));
+    return _getTriviaFromUri(Uri.http('numbersapi.com', '$number'));
   }
 
   @override
   Future<NumberTriviaModel> getRandomNumberTrivia() async {
-    return _getTriviaFromUri(Uri.http("numbersapi.com", "random"));
+    return _getTriviaFromUri(Uri.http('numbersapi.com', 'random'));
   }
 }

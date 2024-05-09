@@ -13,7 +13,6 @@ import 'get_random_number_trivia_test.mocks.dart';
 @GenerateNiceMocks([
   MockSpec<NumberTriviaRepository>(),
 ])
-
 void main() {
   late MockNumberTriviaRepository mockNumberTriviaRepository;
   late GetRandomNumberTrivia usecase;
@@ -23,18 +22,18 @@ void main() {
     usecase = GetRandomNumberTrivia(mockNumberTriviaRepository);
   });
 
-  final tNumberTrivia = NumberTrivia(text: 'test', number: 1);
+  const tNumberTrivia = NumberTrivia(text: 'test', number: 1);
 
   test(
     'should get trivia from the repository',
     () async {
       // arrange
-      final expectedResult = Right<Failure, NumberTrivia>(tNumberTrivia);
+      const expectedResult = Right<Failure, NumberTrivia>(tNumberTrivia);
       when(mockNumberTriviaRepository.getRandomNumberTrivia())
-        .thenAnswer((_) async => expectedResult);
+          .thenAnswer((_) async => expectedResult);
 
       // act
-      final result = await usecase(NoParams());
+      final result = await usecase(const NoParams());
 
       // assert
       expect(result, expectedResult);

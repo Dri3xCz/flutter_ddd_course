@@ -1,4 +1,4 @@
-import 'package:clean_flutter_tdd_ddd/features/number_trivia/domain/entities/number_trivia.dart';
+import '../../domain/entities/number_trivia.dart';
 
 class NumberTriviaModel extends NumberTrivia {
   const NumberTriviaModel({
@@ -8,7 +8,7 @@ class NumberTriviaModel extends NumberTrivia {
 
   factory NumberTriviaModel.fromJson(Map<String, dynamic> json) {
     return NumberTriviaModel(
-      text: json['text'],
+      text: json['text'] as String,
       number: (json['number'] as num).toInt(),
     );
   }
