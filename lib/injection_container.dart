@@ -57,8 +57,10 @@ Future<void> setup() async {
     () => NumberTriviaRemoteDataSourceImpl(client: getIt()),
   );
 
-  getIt.registerSingletonAsync<NumberTriviaLocalDataSource>(
-    () async => NumberTriviaLocalDataSourceImpl(sharedPreferences: await SharedPreferences.getInstance(),)
+  final sharedPreferences = await SharedPreferences.getInstance();
+
+  getIt.registerLazySingleton<NumberTriviaLocalDataSource>(
+    () => NumberTriviaLocalDataSourceImpl(sharedPreferences: sharedPreferences)
   );
 
   //! Core

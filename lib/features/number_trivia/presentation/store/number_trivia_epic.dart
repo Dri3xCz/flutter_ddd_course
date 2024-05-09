@@ -43,29 +43,29 @@ class NumberTriviaEpic<T> implements EpicClass<T> {
     );
   }
 
-  Stream<NumberTriviaAction> _handleConcrete(String numberString) async* {
+  Stream<NumberTriviaAction> _handleConcrete(String numberString) {
     final inputEither = inputConverter.stringToUnsignedInteger(numberString);
-      
-    inputEither.fold(
-      (failure) sync* { 
-        yield FetchFailed(INVALID_INPUT_FAILURE_MESSAGE);
+
+    return inputEither.fold(
+      (failure) { 
+        return Stream.value(FetchFailed(INVALID_INPUT_FAILURE_MESSAGE));
       },
-      (integer) async* {
-        yield* _handleUsecase(getConcreteNumberTrivia(GetConcreteNumberTriviaParams(number: integer)));
+      (integer) {
+        return _handleUsecase(getConcreteNumberTrivia(GetConcreteNumberTriviaParams(number: integer)));
       }
     );
   }
   
-  _handleActionType(NumberTriviaAction action) async {
-    if (action is GetConcrete) await _handleConcrete(action.numberString);
-    if (action is GetRandom) await _handleUsecase(getRandomNumberTrivia(NoParams()));
+  Stream<NumberTriviaAction> _handleActionType(NumberTriviaAction action) {
+    if (action is GetConcrete) return _handleConcrete(action.numberString);
+    else return _handleUsecase(getRandomNumberTrivia(NoParams()));
   }
 
   @override
   Stream call(Stream actions, EpicStore<T> store) {
     return actions.whereType<NumberTriviaAction>()
-    .asyncMap((action) async* {
-      yield _handleActionType(action);
+    .asyncMap((action) async {
+      return _handleActionType(action);
     });
   }
 }

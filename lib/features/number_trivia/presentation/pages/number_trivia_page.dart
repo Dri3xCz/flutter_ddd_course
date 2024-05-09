@@ -14,7 +14,7 @@ class NumberTriviaPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Number Trivia'),
       ),
-      body: buildBody(context)
+      body: buildBody(context),
     );
   }
 }
