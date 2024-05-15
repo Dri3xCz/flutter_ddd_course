@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart' as redux;
 
 import '../../../../core/store/app_state.dart';
 import '../store/data/number_trivia_data_actions.dart';
+import '../store/form/number_trivia_form_actions.dart';
+import '../store/form/number_trivia_form_selectors.dart';
 
-class TriviaControls extends StatefulWidget {
-  @override
-  _TriviaControlsState createState() => _TriviaControlsState();
-}
-
-class _TriviaControlsState extends State<TriviaControls> {
-  final controller = TextEditingController();
-  String inputStr = '';
-
+class TriviaControls extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, VoidCallback>(converter: (store) {
-      return () => store.dispatch(GetConcrete(inputStr));
-    }, builder: (context, dispatchConcrete) {
+    final controller = useTextEditingController(text: '');
+
+    return StoreConnector<AppState, redux.Store<AppState>>(
+    converter: (store) => store,
+    builder: (context, store) {
       return Column(
         children: <Widget>[
           TextField(
@@ -28,29 +26,27 @@ class _TriviaControlsState extends State<TriviaControls> {
               hintText: 'Input a number',
             ),
             onChanged: (value) {
-              inputStr = value;
+              store.dispatch(ChangeDataAction(value));
             },
             onSubmitted: (_) {
-              dispatchConcrete();
-            },
-          ),
+              store.dispatch(GetConcrete(formSelector(store.state)));
+            },),
           const SizedBox(height: 10),
           Row(
             children: <Widget>[
               Expanded(
                 child: ElevatedButton(
-                  onPressed: dispatchConcrete,
+                  onPressed: formSelector(store.state) == '' ? null :
+                  () => store.dispatch(GetConcrete(formSelector(store.state))),
                   child: const Text('Search'),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: StoreConnector<AppState, VoidCallback>(
-                    builder: (context, dispatchRandom) => ElevatedButton(
-                          onPressed: dispatchRandom,
-                          child: const Text('Get random trivia'),
-                        ),
-                    converter: (store) => () => store.dispatch(GetRandom()),),
+                child: ElevatedButton(
+                  onPressed: () => store.dispatch(GetRandom()),
+                  child: const Text('Get random trivia'),
+                ),
               ),
             ],
           ),

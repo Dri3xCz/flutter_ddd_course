@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../../../core/store/app_state.dart';
+import '../store/data/number_trivia_data_selectors.data.dart';
 import '../store/data/number_trivia_data_state.dart';
 import '../widgets/widgets.dart';
 
@@ -19,7 +20,7 @@ class NumberTriviaPage extends StatelessWidget {
 
 StoreConnector<AppState, NumberTriviaDataState> buildBody(BuildContext context) {
   return StoreConnector<AppState, NumberTriviaDataState>(
-    converter: (store) => store.state.numberTriviaState.numberTriviaDataState,
+    converter: (store) => numberTriviaDataStateSelector(store.state),
     builder: (context, state) {
       return Center(
         child: Padding(
