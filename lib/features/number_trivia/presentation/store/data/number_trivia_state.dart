@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../domain/entities/number_trivia.dart';
+import '../../../domain/entities/number_trivia.dart';
 
 sealed class NumberTriviaState extends Equatable {
   const NumberTriviaState();

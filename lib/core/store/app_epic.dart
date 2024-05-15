@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:redux_epics/redux_epics.dart';
 
-import '../../features/number_trivia/presentation/store/number_trivia_epic.dart';
+import '../../features/number_trivia/presentation/store/data/number_trivia_epic.dart';
 import 'app_state.dart';
 
 @lazySingleton

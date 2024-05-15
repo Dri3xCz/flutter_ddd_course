@@ -1,15 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/transformers.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../../../core/store/app_state.dart';
-import '../../../../core/usecases/usecase.dart';
-import '../../../../core/util/input_converter.dart';
-import '../../domain/entities/number_trivia.dart';
-import '../../domain/usecases/get_concrete_number_trivia.dart';
-import '../../domain/usecases/get_random_number_trivia.dart';
+import '../../../../../core/error/failures.dart';
+import '../../../../../core/usecases/usecase.dart';
+import '../../../../../core/util/input_converter.dart';
+import '../../../domain/entities/number_trivia.dart';
+import '../../../domain/usecases/get_concrete_number_trivia.dart';
+import '../../../domain/usecases/get_random_number_trivia.dart';
 import 'number_trivia_actions.dart';
 
 const String SERVER_FAILURE_MESSAGE = 'Server Failure';

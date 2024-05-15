@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../../../core/store/app_state.dart';
-import '../store/number_trivia_state.dart';
+import '../store/data/number_trivia_state.dart';
 import '../widgets/widgets.dart';
 
 class NumberTriviaPage extends StatelessWidget {

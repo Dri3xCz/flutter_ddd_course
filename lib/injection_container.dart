@@ -6,7 +6,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/store/app_state.dart';
-import 'features/number_trivia/presentation/store/number_trivia_epic.dart';
+import 'features/number_trivia/presentation/store/data/number_trivia_epic.dart';
 import 'injection_container.config.dart';
 
 final getIt = GetIt.instance;
