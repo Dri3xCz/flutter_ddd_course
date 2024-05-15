@@ -8,14 +8,14 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:clean_flutter_tdd_ddd/core/network/network_info.dart' as _i11;
-import 'package:clean_flutter_tdd_ddd/core/store/app_epic.dart' as _i12;
+import 'package:clean_flutter_tdd_ddd/core/network/network_info.dart' as _i12;
+import 'package:clean_flutter_tdd_ddd/core/store/app_epic.dart' as _i10;
 import 'package:clean_flutter_tdd_ddd/core/store/app_state.dart' as _i8;
 import 'package:clean_flutter_tdd_ddd/core/util/input_converter.dart' as _i4;
 import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/datasources/number_trivia_local_data_source.dart'
     as _i9;
 import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/datasources/number_trivia_remote_data_source.dart'
-    as _i10;
+    as _i11;
 import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/repositories/number_trivia_repository_impl.dart'
     as _i14;
 import 'package:clean_flutter_tdd_ddd/features/number_trivia/domain/repositories/number_trivia_repository.dart'
@@ -24,7 +24,7 @@ import 'package:clean_flutter_tdd_ddd/features/number_trivia/domain/usecases/get
     as _i15;
 import 'package:clean_flutter_tdd_ddd/features/number_trivia/domain/usecases/get_random_number_trivia.dart'
     as _i16;
-import 'package:clean_flutter_tdd_ddd/features/number_trivia/presentation/store/number_trivia_epic.dart'
+import 'package:clean_flutter_tdd_ddd/features/number_trivia/presentation/store/data/number_trivia_data_epic.dart'
     as _i7;
 import 'package:clean_flutter_tdd_ddd/injection_container.dart' as _i17;
 import 'package:get_it/get_it.dart' as _i1;
@@ -59,17 +59,17 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i9.NumberTriviaLocalDataSource>(() =>
         _i9.NumberTriviaLocalDataSourceImpl(
             sharedPreferences: gh<_i3.SharedPreferences>()));
-    gh.lazySingleton<_i10.NumberTriviaRemoteDataSource>(
-        () => _i10.NumberTriviaRemoteDataSourceImpl(client: gh<_i5.Client>()));
-    gh.lazySingleton<_i11.NetworkInfo>(
-        () => _i11.NetworkInfoImpl(gh<_i6.InternetConnectionChecker>()));
-    gh.lazySingleton<_i12.AppEpic>(() => _i12.AppEpic(
+    gh.lazySingleton<_i10.AppEpic>(() => _i10.AppEpic(
         numberTriviaEpic: gh<_i7.NumberTriviaEpic<_i8.AppState>>()));
+    gh.lazySingleton<_i11.NumberTriviaRemoteDataSource>(
+        () => _i11.NumberTriviaRemoteDataSourceImpl(client: gh<_i5.Client>()));
+    gh.lazySingleton<_i12.NetworkInfo>(
+        () => _i12.NetworkInfoImpl(gh<_i6.InternetConnectionChecker>()));
     gh.lazySingleton<_i13.NumberTriviaRepository>(
         () => _i14.NumberTriviaRepositoryImpl(
-              remoteDataSource: gh<_i10.NumberTriviaRemoteDataSource>(),
+              remoteDataSource: gh<_i11.NumberTriviaRemoteDataSource>(),
               localDataSource: gh<_i9.NumberTriviaLocalDataSource>(),
-              networkInfo: gh<_i11.NetworkInfo>(),
+              networkInfo: gh<_i12.NetworkInfo>(),
             ));
     gh.lazySingleton<_i15.GetConcreteNumberTrivia>(
         () => _i15.GetConcreteNumberTrivia(gh<_i13.NumberTriviaRepository>()));

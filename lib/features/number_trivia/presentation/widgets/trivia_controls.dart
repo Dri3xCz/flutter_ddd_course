@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../../../core/store/app_state.dart';
-import '../store/data/number_trivia_actions.dart';
+import '../store/data/number_trivia_data_actions.dart';
 
 class TriviaControls extends StatefulWidget {
   @override

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../../../core/store/app_state.dart';
-import '../store/data/number_trivia_state.dart';
+import '../store/data/number_trivia_data_state.dart';
 import '../widgets/widgets.dart';
 
 class NumberTriviaPage extends StatelessWidget {
@@ -17,9 +17,9 @@ class NumberTriviaPage extends StatelessWidget {
   }
 }
 
-StoreConnector<AppState, NumberTriviaState> buildBody(BuildContext context) {
-  return StoreConnector<AppState, NumberTriviaState>(
-    converter: (store) => store.state.numberTriviaState,
+StoreConnector<AppState, NumberTriviaDataState> buildBody(BuildContext context) {
+  return StoreConnector<AppState, NumberTriviaDataState>(
+    converter: (store) => store.state.numberTriviaState.numberTriviaDataState,
     builder: (context, state) {
       return Center(
         child: Padding(
@@ -38,7 +38,7 @@ StoreConnector<AppState, NumberTriviaState> buildBody(BuildContext context) {
 }
 
 Widget numberTriviaStateContainer(
-    BuildContext context, NumberTriviaState state,) {
+    BuildContext context, NumberTriviaDataState state,) {
   return switch (state) {
     Empty() => const MessageDisplay(message: 'Start searching!'),
     Loading() => LoadingWidget(),

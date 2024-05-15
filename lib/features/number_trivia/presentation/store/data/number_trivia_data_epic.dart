@@ -8,7 +8,7 @@ import '../../../../../core/util/input_converter.dart';
 import '../../../domain/entities/number_trivia.dart';
 import '../../../domain/usecases/get_concrete_number_trivia.dart';
 import '../../../domain/usecases/get_random_number_trivia.dart';
-import 'number_trivia_actions.dart';
+import 'number_trivia_data_actions.dart';
 
 const String SERVER_FAILURE_MESSAGE = 'Server Failure';
 const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
