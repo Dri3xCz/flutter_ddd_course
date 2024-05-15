@@ -18,7 +18,9 @@ abstract interface class NumberTriviaRemoteDataSource {
   Future<NumberTriviaModel> getRandomNumberTrivia();
 }
 
-@lazySingleton
+@LazySingleton(
+  as: NumberTriviaRemoteDataSource
+)
 class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
   final http.Client client;
 

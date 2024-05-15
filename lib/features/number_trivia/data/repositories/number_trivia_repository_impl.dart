@@ -11,7 +11,9 @@ import '../datasources/number_trivia_remote_data_source.dart';
 import '../models/number_trivia_model.dart';
 
 typedef _ConcreteOrRandomChooser = Future<NumberTriviaModel> Function();
-@lazySingleton
+@LazySingleton(
+  as: NumberTriviaRepository
+)
 class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   final NumberTriviaRemoteDataSource remoteDataSource;
   final NumberTriviaLocalDataSource localDataSource;

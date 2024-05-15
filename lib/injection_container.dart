@@ -15,7 +15,7 @@ final getIt = GetIt.instance;
 Future<void> setup() async {
   WidgetsFlutterBinding.ensureInitialized(); 
   
-  getIt.init();
+  await getIt.init();
 }
 
 @module
@@ -28,4 +28,11 @@ abstract class RegisterModule {
 
   @preResolve
   Future<SharedPreferences> preferences() => SharedPreferences.getInstance();
+
+  @lazySingleton
+  NumberTriviaEpic<AppState> get numberTriviaEpic => NumberTriviaEpic(
+    getConcreteNumberTrivia: getIt(),
+    getRandomNumberTrivia: getIt(),
+    inputConverter: getIt(),
+  );
 }
