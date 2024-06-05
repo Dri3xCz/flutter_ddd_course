@@ -43,7 +43,9 @@ void main() {
   );
 
   void setUpNumberTriviaMapper(
-      NumberTriviaModel tNumberTriviaModel, NumberTrivia tNumberTrivia) {
+    NumberTriviaModel tNumberTriviaModel,
+    NumberTrivia tNumberTrivia,
+  ) {
     when(
       mockNumberTriviaMapper
           .convert<NumberTriviaModel, NumberTrivia?>(tNumberTriviaModel),
@@ -93,7 +95,7 @@ void main() {
           final result = await repository.getConcreteNumberTrivia(tNumber);
 
           // assert
-          expect(result, Right<Failure, NumberTrivia>(tNumberTrivia));
+          expect(result, const Right<Failure, NumberTrivia>(tNumberTrivia));
         },
       );
       test(
@@ -152,7 +154,8 @@ void main() {
         // assert
         verifyZeroInteractions(mockNumberTriviaRemoteDataSource);
         verify(mockNumberTriviaLocalDataSource.getLastNumberTrivia());
-        expect(result, equals(Right<Failure, NumberTrivia>(tNumberTrivia)));
+        expect(
+            result, equals(const Right<Failure, NumberTrivia>(tNumberTrivia)));
       });
 
       test(
@@ -213,7 +216,8 @@ void main() {
           final result = await repository.getRandomNumberTrivia();
           // assert
           verify(mockNumberTriviaRemoteDataSource.getRandomNumberTrivia());
-          expect(result, equals(Right<Failure, NumberTrivia>(tNumberTrivia)));
+          expect(result,
+              equals(const Right<Failure, NumberTrivia>(tNumberTrivia)));
         },
       );
 
@@ -268,7 +272,8 @@ void main() {
           // assert
           verifyZeroInteractions(mockNumberTriviaRemoteDataSource);
           verify(mockNumberTriviaLocalDataSource.getLastNumberTrivia());
-          expect(result, equals(Right<Failure, NumberTrivia>(tNumberTrivia)));
+          expect(result,
+              equals(const Right<Failure, NumberTrivia>(tNumberTrivia)));
         },
       );
 

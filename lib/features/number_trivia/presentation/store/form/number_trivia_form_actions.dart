@@ -1,4 +1,3 @@
-
 final class ChangeDataAction {
   final String data;
 

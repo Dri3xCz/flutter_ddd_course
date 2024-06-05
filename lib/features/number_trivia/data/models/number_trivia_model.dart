@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../domain/entities/number_trivia.dart';
-
 part 'number_trivia_model.freezed.dart';
 part 'number_trivia_model.g.dart';
 

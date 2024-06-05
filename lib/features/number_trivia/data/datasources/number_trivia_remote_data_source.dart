@@ -19,7 +19,7 @@ abstract interface class NumberTriviaRemoteDataSource {
 }
 
 @LazySingleton(
-  as: NumberTriviaRemoteDataSource
+  as: NumberTriviaRemoteDataSource,
 )
 class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
   final http.Client client;
@@ -38,7 +38,8 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
       throw ServerException();
     }
 
-    return NumberTriviaModel.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    return NumberTriviaModel.fromJson(
+        json.decode(response.body) as Map<String, dynamic>);
   }
 
   @override

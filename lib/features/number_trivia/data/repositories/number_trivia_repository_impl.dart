@@ -48,16 +48,20 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
       try {
         final remoteTrivia = await getConcreteOrRandom();
         localDataSource.cacheNumberTrivia(remoteTrivia);
-        return Right(numberTriviaMapper
-            .convert<NumberTriviaModel, NumberTrivia>(remoteTrivia));
+        return Right(
+          numberTriviaMapper
+              .convert<NumberTriviaModel, NumberTrivia>(remoteTrivia),
+        );
       } on ServerException {
         return Left(ServerFailure());
       }
     } else {
       try {
         final localTrivia = await localDataSource.getLastNumberTrivia();
-        return Right(numberTriviaMapper
-            .convert<NumberTriviaModel, NumberTrivia>(localTrivia));
+        return Right(
+          numberTriviaMapper
+              .convert<NumberTriviaModel, NumberTrivia>(localTrivia),
+        );
       } on CacheException {
         return Left(CacheFailure());
       }

@@ -1,4 +1,3 @@
-
 final class NumberTriviaFormState {
   final String form;
 
