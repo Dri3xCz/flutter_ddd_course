@@ -155,7 +155,9 @@ void main() {
         verifyZeroInteractions(mockNumberTriviaRemoteDataSource);
         verify(mockNumberTriviaLocalDataSource.getLastNumberTrivia());
         expect(
-            result, equals(const Right<Failure, NumberTrivia>(tNumberTrivia)));
+          result,
+          equals(const Right<Failure, NumberTrivia>(tNumberTrivia)),
+        );
       });
 
       test(
@@ -216,8 +218,10 @@ void main() {
           final result = await repository.getRandomNumberTrivia();
           // assert
           verify(mockNumberTriviaRemoteDataSource.getRandomNumberTrivia());
-          expect(result,
-              equals(const Right<Failure, NumberTrivia>(tNumberTrivia)));
+          expect(
+            result,
+            equals(const Right<Failure, NumberTrivia>(tNumberTrivia)),
+          );
         },
       );
 
@@ -272,8 +276,10 @@ void main() {
           // assert
           verifyZeroInteractions(mockNumberTriviaRemoteDataSource);
           verify(mockNumberTriviaLocalDataSource.getLastNumberTrivia());
-          expect(result,
-              equals(const Right<Failure, NumberTrivia>(tNumberTrivia)));
+          expect(
+            result,
+            equals(const Right<Failure, NumberTrivia>(tNumberTrivia)),
+          );
         },
       );
 

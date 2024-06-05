@@ -1,3 +1,5 @@
+// ignore_for_file: require_trailing_commas
+
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
