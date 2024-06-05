@@ -9,10 +9,16 @@ void main() {
   const tNumberTriviaModel = NumberTriviaModel(number: 1, text: 'Test text');
 
   test(
-    'should be a subclass of NumberTrivia',
+    'method toDomain should return NumberTrvia',
     () async {
+      // arrange
+      const numberTrivia = NumberTrivia(number: 1, text: 'Test text');
+
+      // act
+      final result = tNumberTriviaModel.toDomain();
+
       // assert
-      expect(tNumberTriviaModel, isA<NumberTrivia>());
+      expect(result, numberTrivia);
     },
   );
 

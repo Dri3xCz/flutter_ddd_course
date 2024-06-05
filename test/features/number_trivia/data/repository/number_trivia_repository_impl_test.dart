@@ -39,11 +39,14 @@ void main() {
     const tNumber = 1;
     const tNumberTriviaModel =
         NumberTriviaModel(text: 'test trivia', number: tNumber);
-    const NumberTrivia tNumberTrivia = tNumberTriviaModel;
+    final tNumberTrivia = tNumberTriviaModel.toDomain();
 
     test('should check if the device is online', () async {
       // arrange
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      when(mockNumberTriviaRemoteDataSource
+        .getConcreteNumberTrivia(tNumber),)
+        .thenAnswer((_) async => tNumberTriviaModel);
 
       // act
       repository.getConcreteNumberTrivia(tNumber);
@@ -69,7 +72,7 @@ void main() {
           final result = await repository.getConcreteNumberTrivia(tNumber);
 
           // assert
-          expect(result, const Right<Failure, NumberTrivia>(tNumberTrivia));
+          expect(result, Right<Failure, NumberTrivia>(tNumberTrivia));
         },
       );
       test(
@@ -124,7 +127,7 @@ void main() {
         // assert
         verifyZeroInteractions(mockNumberTriviaRemoteDataSource);
         verify(mockNumberTriviaLocalDataSource.getLastNumberTrivia());
-        expect(result, equals(const Right<Failure, NumberTrivia>(tNumberTrivia)));
+        expect(result, equals(Right<Failure, NumberTrivia>(tNumberTrivia)));
       });
 
       test(
@@ -147,11 +150,15 @@ void main() {
   group('getRandomNumberTrivia', () {
     const tNumberTriviaModel =
         NumberTriviaModel(number: 123, text: 'test trivia');
-    const NumberTrivia tNumberTrivia = tNumberTriviaModel;
+    final tNumberTrivia = tNumberTriviaModel.toDomain();
 
     test('should check if the device is online', () {
       //arrange
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      when(mockNumberTriviaRemoteDataSource
+        .getRandomNumberTrivia(),)
+        .thenAnswer((_) async => tNumberTriviaModel);
+
       // act
       repository.getRandomNumberTrivia();
       // assert
@@ -173,7 +180,7 @@ void main() {
           final result = await repository.getRandomNumberTrivia();
           // assert
           verify(mockNumberTriviaRemoteDataSource.getRandomNumberTrivia());
-          expect(result, equals(const Right<Failure, NumberTrivia>(tNumberTrivia)));
+          expect(result, equals(Right<Failure, NumberTrivia>(tNumberTrivia)));
         },
       );
 
@@ -224,7 +231,7 @@ void main() {
           // assert
           verifyZeroInteractions(mockNumberTriviaRemoteDataSource);
           verify(mockNumberTriviaLocalDataSource.getLastNumberTrivia());
-          expect(result, equals(const Right<Failure, NumberTrivia>(tNumberTrivia)));
+          expect(result, equals(Right<Failure, NumberTrivia>(tNumberTrivia)));
         },
       );
 
