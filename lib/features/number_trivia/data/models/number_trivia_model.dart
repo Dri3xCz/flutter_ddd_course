@@ -7,20 +7,13 @@ part 'number_trivia_model.g.dart';
 
 @freezed
 class NumberTriviaModel with _$NumberTriviaModel {
-  const NumberTriviaModel._();
-
   const factory NumberTriviaModel({
     required String text,
     required int number,
   }) = _NumberTriviaModel;
 
-  factory NumberTriviaModel.fromJson(Map<String, Object?> json)
-    => _$NumberTriviaModelFromJson(json);
+  const NumberTriviaModel._();
 
-  NumberTrivia toDomain() {
-    return NumberTrivia(
-      number: number,
-      text: text,
-    );
-  }
+  factory NumberTriviaModel.fromJson(Map<String, Object?> json) =>
+      _$NumberTriviaModelFromJson(json);
 }

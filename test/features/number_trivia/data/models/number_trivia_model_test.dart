@@ -8,25 +8,12 @@ import '../../../../fixtures/fixture_reader.dart';
 void main() {
   const tNumberTriviaModel = NumberTriviaModel(number: 1, text: 'Test text');
 
-  test(
-    'method toDomain should return NumberTrvia',
-    () async {
-      // arrange
-      const numberTrivia = NumberTrivia(number: 1, text: 'Test text');
-
-      // act
-      final result = tNumberTriviaModel.toDomain();
-
-      // assert
-      expect(result, numberTrivia);
-    },
-  );
-
   group('fromJson', () {
     test('should return a valid model when the JSON number is an integer',
         () async {
-      // arange
-      final Map<String, dynamic> jsonMap = json.decode(fixture('trivia.json')) as Map<String, dynamic>;
+      // arrange
+      final Map<String, dynamic> jsonMap =
+          json.decode(fixture('trivia.json')) as Map<String, dynamic>;
 
       // act
       final result = NumberTriviaModel.fromJson(jsonMap);

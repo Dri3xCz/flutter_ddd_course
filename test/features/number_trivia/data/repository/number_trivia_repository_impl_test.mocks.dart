@@ -10,6 +10,8 @@ import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/datasources/nu
     as _i3;
 import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/datasources/number_trivia_remote_data_source.dart'
     as _i5;
+import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/mapper/number_trivia_mapper.dart'
+    as _i7;
 import 'package:clean_flutter_tdd_ddd/features/number_trivia/data/models/number_trivia_model.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -147,3 +149,9 @@ class MockNetworkInfo extends _i1.Mock implements _i6.NetworkInfo {
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
 }
+
+/// A class which mocks [NumberTriviaMapper].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNumberTriviaMapper extends _i1.Mock
+    implements _i7.NumberTriviaMapper {}

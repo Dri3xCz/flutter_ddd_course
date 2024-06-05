@@ -8,21 +8,23 @@ import '../../domain/entities/number_trivia.dart';
 import '../../domain/repositories/number_trivia_repository.dart';
 import '../datasources/number_trivia_local_data_source.dart';
 import '../datasources/number_trivia_remote_data_source.dart';
+import '../mapper/number_trivia_mapper.dart';
 import '../models/number_trivia_model.dart';
 
 typedef _ConcreteOrRandomChooser = Future<NumberTriviaModel> Function();
-@LazySingleton(
-  as: NumberTriviaRepository
-)
+
+@LazySingleton(as: NumberTriviaRepository)
 class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   final NumberTriviaRemoteDataSource remoteDataSource;
   final NumberTriviaLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
+  final NumberTriviaMapper numberTriviaMapper;
 
   NumberTriviaRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
     required this.networkInfo,
+    required this.numberTriviaMapper,
   });
 
   @override
@@ -46,14 +48,16 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
       try {
         final remoteTrivia = await getConcreteOrRandom();
         localDataSource.cacheNumberTrivia(remoteTrivia);
-        return Right(remoteTrivia.toDomain());
+        return Right(numberTriviaMapper
+            .convert<NumberTriviaModel, NumberTrivia>(remoteTrivia));
       } on ServerException {
         return Left(ServerFailure());
       }
     } else {
       try {
         final localTrivia = await localDataSource.getLastNumberTrivia();
-        return Right(localTrivia.toDomain());
+        return Right(numberTriviaMapper
+            .convert<NumberTriviaModel, NumberTrivia>(localTrivia));
       } on CacheException {
         return Left(CacheFailure());
       }
